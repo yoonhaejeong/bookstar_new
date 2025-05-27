@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!--bootstrap css-->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+      <!--google icon-->
+      <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+
+      <!--jquery-->
+      <Script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></Script>
+
+      <title>BookStar</title>
+</head>
+
+<style>
+   .main_body {
+      flex-direction: column;
+      display: flex;
+      width: 100%;
+      height: 900px;
+      margin: 0 auto;
+      align-items: center;
+      padding-top:70px;
+      background-color: #efefef;
+   }
+
+   .left_body {
+          background-color: #ffffff;
+          margin-right: 100px;
+          width: 800px;
+          height: 2000px;
+          display: flex;
+          padding-top: 50px;
+          flex-direction: column;
+          align-items: center;
+      }
+
+  .button{
+      width: 400px;
+      height: 50px;
+      background-color: #ffffff;
+      color: #555454;
+      font-size: 16px;
+      border-color: #e1e1e1;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  .button:hover{
+      background-color: #ededed;
+  }
+
+  .box {
+      display: none;
+      width: 100%;
+      height: 700px;
+      margin-top: 20px;
+      background-color: #c3c3c3;
+  }
+
+
+</style>
+
+<body>
+    <!--상단 네비게이션 바-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light"
+    style="width:100%; height:50px; position:fixed;">
+      <div class="container-fluid">
+          <img style="height: 30px; object-fit: contain" src="https://cdn-icons-png.flaticon.com/512/864/864685.png">
+          <input class="form-control" style="width: 200px" type="search" placeholder="Search" aria-label="Search">
+
+          <div>
+            <span id="home" class="material-icons" style="cursor: pointer;">home</span>
+            <!--
+            <span id="login" class="material-icons-outlined">login</span>
+            <span id="join" class="material-icons-outlined">person</span>
+            -->
+          </div>
+      </div>
+    </nav>
+
+    <div class="main_body">
+    <div class="left_body">
+        <h1 style="margin-bottom: 30px; color: #504f4f; font-weight: bold;">도서 추천 페이지</h1>
+
+        <div style="display: flex; gap: 0px; align-items: center;">
+            <button class="button" id="btn1">추천 책 보기</button>
+            <button class="button" id="btn2">새로운 책 보기</button>
+        </div>
+
+        <!--관련 추천 도서-->
+        <div class="box" id="box1">
+            <div id="recommendation-list">
+                <p>추천 결과를 불러오는 중...</p>
+            </div>
+        </div>
+        <!--관련되지 않은 추천 도서-->
+        <div class="box" id="box2"></div>
+
+    <script>
+        const btn1 = document.getElementById("btn1");
+        const btn2 = document.getElementById("btn2");
+        const box1 = document.getElementById("box1");
+        const box2 = document.getElementById("box2");
+
+        btn1.addEventListener("click", () => {
+            box1.style.display = "block";
+            box2.style.display = "none";
+
+        fetch("/book/recommend/?user_id=흙속에저바람속에")  // 경로 확인
+        .then(response => response.json())
+        .then(data => {
+            const list = document.getElementById("recommendation-list");
+            list.innerHTML = "";
+            if (data.results) {
+                data.results.forEach((item, idx) => {
+                    const div = document.createElement("div");
+                    div.innerText = `${idx + 1}. ${item[1]} (ID: ${item[0]})`;
+                    list.appendChild(div);
+                });
+            } else {
+                list.innerText = "추천 결과가 없습니다.";
+            }
+        })
+        .catch(error => {
+            document.getElementById("recommendation-list").innerText = "오류 발생";
+            console.error("추천 오류:", error);
+        });
+        });
+
+        btn2.addEventListener("click", () => {
+            box2.style.display = "block";
+            box1.style.display = "none";
+        });
+
+        //home 버튼
+        const homeIcon = document.getElementById("home");
+
+        homeIcon.addEventListener("click", () => {
+            window.location.href = "/";
+        });
+
+    </script>
+    </div>
+    </div>
+</body>
+</html>

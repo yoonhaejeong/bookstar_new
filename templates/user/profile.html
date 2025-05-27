@@ -1,0 +1,517 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>프로필 페이지</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fafafa;
+      padding-top: 60px; /* 네비게이션 바 높이보다 약간 더 크게 설정 */
+    }
+
+    .profile-container {
+      max-width: 935px;
+      margin: 0 auto;
+      padding: 20px;
+      width: 100%;
+    }
+
+    .profile-header {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+      gap: 20px;
+    }
+
+    .profile-picture {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #e0e0e0;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .camera-icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    .profile-menu {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: white;
+      border-radius: 5px;
+      padding: 5px;
+      cursor: pointer;
+    }
+
+    .profile-info {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .profile-username {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .profile-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-item {
+      margin-right: 20px;
+      cursor: pointer;
+    }
+
+    .profile-bio {
+      margin-bottom: 20px;
+    }
+
+    .profile-tabs {
+      display: flex;
+      justify-content: center;
+      border-top: 1px solid #dbdbdb;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .profile_img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 15px 0;
+      cursor: pointer;
+      min-width: 100px;
+    }
+
+    .tab.active {
+      border-top: 1px solid #262626;
+      margin-top: -1px;
+    }
+
+    .tab i {
+      margin-right: 6px;
+    }
+
+    .no-posts {
+      text-align: center;
+      padding: 60px 0;
+    }
+
+    .empty-circle {
+      width: 62px;
+      height: 62px;
+      border: 1px solid #dbdbdb;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 20px;
+    }
+
+    .plus-icon {
+      font-size: 24px;
+      color: #dbdbdb;
+    }
+
+    .btn-outline-dark {
+      border-radius: 4px;
+      padding: 5px 9px;
+      font-weight: 600;
+      font-size: 14px;
+      margin: 5px;
+    }
+
+    .stories-section {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+      gap: 15px;
+    }
+
+    .story-item {
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .story-circle {
+      width: 77px;
+      height: 77px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 8px;
+    }
+
+    .new-post-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+      text-align: center;
+      padding: 0 10px;
+    }
+
+    .camera-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 2px solid #dbdbdb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+
+    /* 반응형 스타일 */
+    @media (max-width: 768px) {
+      .profile-header {
+        justify-content: center;
+      }
+
+      .profile-picture {
+        margin-right: 0;
+      }
+
+      .profile-info {
+        text-align: center;
+      }
+
+      .profile-username {
+        justify-content: center;
+      }
+
+      .profile-stats {
+        justify-content: center;
+      }
+
+      .btn-outline-dark {
+        margin: 5px;
+      }
+
+      .stories-section {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .profile-picture {
+        width: 120px;
+        height: 120px;
+      }
+
+      .tab {
+        padding: 10px 0;
+      }
+
+      .new-post-area h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* 네비게이션 반응형 스타일 */
+    .navbar .container-fluid {
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .navbar-nav-items {
+        margin-top: 10px;
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* 링크 스타일 */
+    .nav-link {
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .nav-link:hover {
+      color: #0d6efd;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="width:100%; height:auto; min-height:50px; position:fixed; top:0; z-index:1000;">
+      <div class="container-fluid">
+          <a href="/" class="navbar-brand">
+            <img style="height: 30px; object-fit: contain" src="https://cdn-icons-png.flaticon.com/512/864/864685.png">
+          </a>
+          <input class="form-control mx-2" style="width: 200px" type="search" placeholder="Search" aria-label="Search">
+
+          <div class="navbar-nav-items" style="display: flex; flex-wrap: wrap; gap: 15px; align-items: center">
+              <!--
+              <a href="/post/create/" class="nav-link" id="add_feed">새 게시물</a>
+              -->
+              <a href="/book/" class="nav-link" id="book_rec">도서 추천</a>
+              <!--
+              <a href="/user/login/" class="nav-link" id="login">로그인</a>
+              <a href="/user/join/" class="nav-link" id="join">회원가입</a>
+              -->
+              <div class="dropdown">
+                <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                   style="background-color: transparent; border: none; padding: 0; display: flex; align-items: center;">
+                  <div class="profile_box" style="width: 25px; height: 25px; display: flex; align-items: center;">
+                    <img class="profile_img" src="{% if user.profile_image %}/media/{{ user.profile_image }}{% else %}{% static 'images/default-profile.jpg' %}{% endif %}">
+                  </div>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end" style="margin-top: 5px;">
+                  <li><a class="dropdown-item" href="/user/profile/">프로필</a></li>
+                  <li><a class="dropdown-item" href="/user/logout/">로그아웃</a></li>
+                </ul>
+              </div>
+          </div>
+      </div>
+</nav>
+
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="profile-picture">
+      <!--
+        <svg class="camera-icon" fill="white" viewBox="0 0 24 24">
+        <path d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm0 5.5a2 2 0 110-4 2 2 0 010 4zm6.5-4.5v-2c0-.55-.45-1-1-1h-2l-1-1h-5l-1 1h-2c-.55 0-1 .45-1 1v2h-1c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-9c0-.55-.45-1-1-1h-1zm-11-1h9v1h-9v-1zm11 11h-12v-8h12v8z"/>
+      </svg>-->
+        {% if user.profile_image %}
+            <img src="/media/{{ user.profile_image }}" alt="프로필 이미지" class="profile_img">
+        {% else %}
+            <img src="{% static 'images/default-image.jpg' %}" alt="기본 이미지" class="profile_img">
+        {% endif %}
+    </div>
+
+    <div class="profile-info">
+      <div class="profile-username">
+        <h4>{{ user.name }}</h4>
+        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editProfileModal">프로필 편집</button>
+      </div>
+
+      <div class="profile-stats">
+        <div class="stat-item">게시물 <strong>{{ feeds|length }}</strong></div>
+        <div class="stat-item">팔로워 <strong>{{ follower_count }}</strong></div>
+        <div class="stat-item">팔로우 <strong>{{ following_count }}</strong></div>
+      </div>
+
+      <div class="profile-bio">
+        <p>{{ user.email }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!--
+  <div class="stories-section">
+    <div class="story-item" onclick="location.href='/user/create-story/'">
+      <div class="story-circle">
+        <div class="empty-circle">
+          <span class="plus-icon">+</span>
+        </div>
+      </div>
+      <span>신규</span>
+    </div>
+  </div>
+  -->
+
+    <div class="profile-tabs">
+    <div class="tab active" onclick="switchTab('posts')">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+        <rect width="5" height="5" x="0.5" y="0.5" />
+        <rect width="5" height="5" x="6.5" y="0.5" />
+        <rect width="5" height="5" x="0.5" y="6.5" />
+        <rect width="5" height="5" x="6.5" y="6.5" />
+      </svg>
+      게시물
+    </div>
+    <!--
+    <div class="tab" onclick="switchTab('saved')">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+        <path d="M10.5 1h-9A.5.5 0 001 1.5v9a.5.5 0 00.5.5h9a.5.5 0 00.5-.5v-9a.5.5 0 00-.5-.5zm-.5 9H2V2h8v8z"/>
+        <path d="M8.5 3.5h-5v1h5v-1zm0 2h-5v1h5v-1zm0 2h-5v1h5v-1z"/>
+      </svg>
+      저장됨
+    </div>
+    -->
+    <div class="tab" onclick="switchTab('tagged')">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+        <path d="M9.9 2.1L9.6 1.4C9.5 1.2 9.3 1 9 1H3C2.7 1 2.5 1.2 2.4 1.4L2.1 2.1C2 2.3 2 2.4 2 2.6v7.9c0 .3.3.5.5.5h7c.3 0 .5-.2.5-.5V2.6c0-.2 0-.3-.1-.5zM3.3 1.9c0-.1.1-.2.2-.2h5c.1 0 .2.1.2.2L9 3H3l.3-1.1zM9 10H3V4h6v6z"/>
+      </svg>
+      태그됨
+    </div>
+  </div>
+
+    <!--게시물-->
+    <div class="tab-content" id="posts-tab">
+    {% if feeds %}
+     <div class="row">
+       {% for feed in feeds %}
+         <div class="col-md-4 mb-4">
+           <div class="card">
+             <img src="{% if 'http' in feed.image %}{{ feed.image }}{% else %}/media/{{ feed.image }}{% endif %}" class="card-img-top" alt="피드 이미지">
+             <div class="card-body">
+               <p class="card-text">{{ feed.content }}</p>
+               <small class="text-muted">{{ feed.created_at|date:"Y-m-d H:i" }}</small>
+             </div>
+           </div>
+         </div>
+       {% endfor %}
+     </div>
+    {% else %}
+    <p class="text-center">게시물이 없습니다.</p>
+    {% endif %}
+    </div>
+
+    <!--bookmark-->
+    <div id="tagged-tab" class="tab-content" style="display: none;">
+        {% if bookmarked_feeds %}
+        <div class="row">
+          {% for feed in bookmarked_feeds %}
+            <div class="col-md-4 mb-4">
+              <div class="card">
+                <img src="{% if 'http' in feed.image %}{{ feed.image }}{% else %}/media/{{ feed.image }}{% endif %}" class="card-img-top" alt="북마크 이미지">
+                <div class="card-body">
+                  <p class="card-text">{{ feed.content }}</p>
+                  <small class="text-muted">{{ feed.created_at|date:"Y-m-d H:i" }}</small>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-center text-muted">북마크된 게시물이 없습니다.</p>
+        {% endif %}
+    </div>
+
+
+    <!--
+      <div class="new-post-area">
+        <div class="camera-circle" onclick="location.href='/post/create/'">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="black">
+            <path d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm0 5.5a2 2 0 110-4 2 2 0 010 4zm6.5-4.5v-2c0-.55-.45-1-1-1h-2l-1-1h-5l-1 1h-2c-.55 0-1 .45-1 1v2h-1c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-9c0-.55-.45-1-1-1h-1zm-11-1h9v1h-9v-1zm11 11h-12v-8h12v8z"/>
+          </svg>
+        </div>
+        <h2>사진 공유</h2>
+        <p>사진을 공유하면 회원님의 프로필에 표시됩니다.</p>
+        <button class="btn btn-primary mt-3" onclick="location.href='/post/create/'">첫 사진 공유하기</button>
+      </div>
+    </div>
+    -->
+    <!--프로필 이미지 변경 모달-->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="profileImageForm" enctype="multipart/form-data">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editProfileModalLabel">프로필 이미지 변경</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <input type="file" name="profile_image" class="form-control" accept="image/*" required>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">저장</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // 탭 전환 기능
+  function switchTab(tabName) {
+    // 모든 탭 비활성화
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.classList.remove('active');
+    });
+
+    // 클릭한 탭 활성화
+    if(tabName === 'posts') {
+      document.querySelectorAll('.tab')[0].classList.add('active');
+      document.getElementById('posts-tab').style.display='block';
+      document.getElementById('tagged-tab').style.display='none';
+    }
+    //else if(tabName === 'saved') {
+    //  document.querySelectorAll('.tab')[1].classList.add('active');
+    //}
+    else if(tabName === 'tagged') {
+      document.querySelectorAll('.tab')[1].classList.add('active');
+      document.getElementById('posts-tab').style.display = 'none';
+      document.getElementById('tagged-tab').style.display = 'block';
+    }
+
+    // 실제 애플리케이션에서는 여기에 탭 콘텐츠를 로드하는 코드가 들어갑니다
+    console.log('Switching to tab: ' + tabName);
+  }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    $('#profileImageForm').on('submit', function(e) {
+        e.preventDefault();
+        console.log("폼 제출 시도됨");
+        const formData = new FormData(this);
+        formData.append('email','{{ user.email }}');
+
+        $.ajax({
+            url: '/user/update-profile-image/',
+            type: 'POST',
+            headers: { 'X-CSRFToken': csrftoken },
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function () {
+                alert('프로필 이미지가 변경되었습니다.');
+                location.reload();
+            },
+            error: function () {
+                alert('업데이트 실패');
+            }
+        });
+    });
+    </script>
+</body>
+</html>
