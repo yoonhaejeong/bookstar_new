@@ -1,8 +1,8 @@
-import torch
+import torch 
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
+import pandas as pd
 from model import NCF
-
 
 class RatingDataset(Dataset):
     def __init__(self, df, user2id, item2id):
@@ -15,7 +15,6 @@ class RatingDataset(Dataset):
 
     def __getitem__(self, idx):
         return self.user_tensor[idx], self.item_tensor[idx], self.rating_tensor[idx]
-
 
 def train_ncf_model(df, user2id, item2id, epochs=5, batch_size=256, lr=0.001):
     dataset = RatingDataset(df, user2id, item2id)
@@ -38,3 +37,21 @@ def train_ncf_model(df, user2id, item2id, epochs=5, batch_size=256, lr=0.001):
         print(f"Epoch {epoch + 1}/{epochs} | Loss: {total_loss:.4f}")
 
     return model
+
+# 🚀 실행 진입점
+if __name__ == "__main__":
+    # 🗂️ 데이터 로드 (파일명에 맞게 조정)
+    df = pd.read_csv("sarak_reviews_100users.csv")
+
+    # 🧠 매핑 준비
+    user2id = {u: i for i, u in enumerate(df['user_id'].unique())}
+    item2id = {i: j for j, i in enumerate(df['item_id'].unique())}
+
+    # 💪 학습
+    model = train_ncf_model(df, user2id, item2id)
+
+    # 💾 저장
+    torch.save(user2id, "user2id.pt")
+    torch.save(item2id, "item2id.pt")
+    torch.save(model.state_dict(), "ncf_model.pt")
+    print("✅ 모델 및 매핑 저장 완료: ncf_model.pt, user2id.pt, item2id.pt")

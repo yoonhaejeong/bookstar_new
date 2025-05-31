@@ -1,0 +1,30 @@
+def recommend(self, user_id, user_review, top_k=5):
+        self.ncf_model.eval()
+        with torch.no_grad():
+            user_indices = [self.user2id[user_id]] * len(self.book_df)
+            item_indices = list(self.book_df['item_id'].map(self.item2id.get))
+
+            # None 값 체크 (매우 중요)
+            if None in item_indices:
+                missing_items = self.book_df['item_id'][[i is None for i in item_indices]]
+                print("[❌ 오류] item2id에 매핑되지 않은 책이 있습니다:")
+                print(missing_items)
+                raise ValueError("item2id에 없는 item_id가 포함되어 있습니다.")
+
+            user_tensor = torch.tensor(user_indices, dtype=torch.long).to(self.device)
+            item_tensor = torch.tensor(item_indices, dtype=torch.long).to(self.device)
+
+            ncf_scores = self.ncf_model(user_tensor, item_tensor).cpu().numpy()
+
+        review_embedding = self.embedder.encode(user_review, convert_to_tensor=True, device=self.device)
+        sim_scores = util.pytorch_cos_sim(review_embedding, self.book_embeddings)[0].cpu().numpy()
+
+        final_scores = self.alpha * ncf_scores + (1 - self.alpha) * sim_scores
+
+        top_indices = final_scores.argsort()[-top_k:][::-1]
+        recommendations = [
+            (self.book_df.iloc[i]['item_id'], self.book_df.iloc[i]['title'])
+            for i in top_indices
+        ]
+
+        return recommendations
