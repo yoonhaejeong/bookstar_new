@@ -84,68 +84,131 @@
       </div>
     </nav>
 
-    <div class="main_body">
-    <div class="left_body">
-        <h1 style="margin-bottom: 30px; color: #504f4f; font-weight: bold;">도서 추천 페이지</h1>
+  <div class="main_body">
+  <div class="left_body">
+    <h1 style="margin-bottom: 30px; color: #504f4f; font-weight: bold;">도서 추천 페이지</h1>
 
-        <div style="display: flex; gap: 0px; align-items: center;">
-            <button class="button" id="btn1">추천 책 보기</button>
-            <button class="button" id="btn2">새로운 책 보기</button>
-        </div>
+    <!-- ✅ 변경 후 -->
+<div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+  <div style="display: flex; gap: 10px;">
+    <button class="button" id="btn1">추천 책 보기</button>
+    <button class="button" id="btn2">새로운 책 보기</button>
+  </div>
+  <button class="button" id="btn3">📚 책 검색하기</button> <!-- ⬅️ 아래에 위치 -->
+</div>
 
-        <!--관련 추천 도서-->
-        <div class="box" id="box1">
-            <div id="recommendation-list">
-                <p>추천 결과를 불러오는 중...</p>
-            </div>
-        </div>
-        <!--관련되지 않은 추천 도서-->
-        <div class="box" id="box2"></div>
 
-    <script>
-        const btn1 = document.getElementById("btn1");
-        const btn2 = document.getElementById("btn2");
-        const box1 = document.getElementById("box1");
-        const box2 = document.getElementById("box2");
+    <!-- ✅ 검색창 및 결과 박스 -->
+    <div class="box" id="box3">
+      <div class="input-group p-3" style="width: 90%;">
+        <input type="text" id="searchInput" class="form-control" placeholder="책 제목을 입력하세요">
+        <button class="btn btn-primary" id="searchButton">검색</button>
+      </div>
+      <div id="searchResults" class="p-3"></div>
+    </div>
 
-        btn1.addEventListener("click", () => {
-            box1.style.display = "block";
-            box2.style.display = "none";
+    <!--관련 추천 도서-->
+    <div class="box" id="box1">
+      <div id="recommendation-list">
+        <p>추천 결과를 불러오는 중...</p>
+      </div>
+    </div>
 
-        fetch("/book/recommend/?user_id=흙속에저바람속에")  // 경로 확인
-        .then(response => response.json())
-        .then(data => {
-            const list = document.getElementById("recommendation-list");
-            list.innerHTML = "";
-            if (data.results) {
-                data.results.forEach((item, idx) => {
-                    const div = document.createElement("div");
-                    div.innerText = `${idx + 1}. ${item[1]} (ID: ${item[0]})`;
-                    list.appendChild(div);
-                });
-            } else {
-                list.innerText = "추천 결과가 없습니다.";
-            }
-        })
-        .catch(error => {
-            document.getElementById("recommendation-list").innerText = "오류 발생";
-            console.error("추천 오류:", error);
-        });
-        });
+    <!--관련되지 않은 추천 도서-->
+    <div class="box" id="box2"></div>
 
-        btn2.addEventListener("click", () => {
-            box2.style.display = "block";
-            box1.style.display = "none";
-        });
+<script>
+  const btn1 = document.getElementById("btn1");
+  const btn2 = document.getElementById("btn2");
+  const btn3 = document.getElementById("btn3"); // ✅ 추가
 
-        //home 버튼
-        const homeIcon = document.getElementById("home");
+  const box1 = document.getElementById("box1");
+  const box2 = document.getElementById("box2");
+  const box3 = document.getElementById("box3"); // ✅ 추가
 
-        homeIcon.addEventListener("click", () => {
-            window.location.href = "/";
-        });
+  btn1.addEventListener("click", () => {
+    box1.style.display = "block";
+    box2.style.display = "none";
+    box3.style.display = "none";
 
-    </script>
+    fetch("/book/recommend/?user_id=흙속에저바람속에")
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById("recommendation-list");
+        list.innerHTML = "";
+        if (data.results) {
+          data.results.forEach((item, idx) => {
+            const div = document.createElement("div");
+            div.innerText = `${idx + 1}. ${item[1]} (ID: ${item[0]})`;
+            list.appendChild(div);
+          });
+        } else {
+          list.innerText = "추천 결과가 없습니다.";
+        }
+      })
+      .catch(error => {
+        document.getElementById("recommendation-list").innerText = "오류 발생";
+        console.error("추천 오류:", error);
+      });
+  });
+
+  btn2.addEventListener("click", () => {
+    box2.style.display = "block";
+    box1.style.display = "none";
+    box3.style.display = "none";
+  });
+
+  btn3.addEventListener("click", () => {
+    box3.style.display = "block";
+    box1.style.display = "none";
+    box2.style.display = "none";
+  });
+
+  // 검색 기능
+  document.getElementById("searchButton").addEventListener("click", function() {
+    const query = document.getElementById("searchInput").value.trim();
+    if (!query) {
+      alert("검색어를 입력하세요!");
+      return;
+    }
+
+    fetch(`/book/search/naver_xml/?query=${encodeURIComponent(query)}`)
+      .then(response => response.json())
+      .then(data => {
+        const resultDiv = document.getElementById("searchResults");
+        resultDiv.innerHTML = "";
+
+        if (data.items && data.items.length > 0) {
+          data.items.forEach(item => {
+            const element = document.createElement("div");
+            element.className = "card p-3 mb-3";
+            element.innerHTML = `
+              <h5>${item.title}</h5>
+              <p><strong>저자:</strong> ${item.author}</p>
+              <p>${item.description}</p>
+              <a href="${item.link}" target="_blank">자세히 보기</a>
+            `;
+            resultDiv.appendChild(element);
+          });
+        } else {
+          resultDiv.innerHTML = "<p>검색 결과가 없습니다.</p>";
+        }
+      })
+      .catch(err => {
+        console.error("오류:", err);
+        document.getElementById("searchResults").innerHTML = "<p>오류 발생</p>";
+      });
+  });
+
+  // 홈 아이콘
+  const homeIcon = document.getElementById("home");
+  if (homeIcon) {
+    homeIcon.addEventListener("click", () => {
+      window.location.href = "/";
+    });
+  }
+</script>
+
     </div>
     </div>
 </body>

@@ -4,31 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c831ed43-a7ab-43c7-87a8-fc4ba3dd05e1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/book/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/book/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/content/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/content/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/like/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/like/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/like/apps.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/like/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/like/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/like/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/like/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/like/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/book/recommend_book.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/book/recommend_book.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/bookstar/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/bookstar/main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="c831ed43-a7ab-43c7-87a8-fc4ba3dd05e1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,6 +40,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/yoonh/OneDrive/바탕 화면/3-1/bookstar_new-main&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -106,8 +83,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-PY-243.24978.54" />
-        <option value="bundled-python-sdk-91e3b7efe1d4-466328ff949b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.24978.54" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PY-243.25659.43" />
+        <option value="bundled-python-sdk-181015f7ab06-4df51de95216-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.25659.43" />
       </set>
     </attachedChunks>
   </component>
@@ -129,6 +106,8 @@
       <workItem from="1744871170558" duration="649000" />
       <workItem from="1746939159405" duration="10096000" />
       <workItem from="1748166515596" duration="24120000" />
+      <workItem from="1748783571009" duration="1029000" />
+      <workItem from="1748828632291" duration="1480000" />
     </task>
     <servers />
   </component>
